@@ -1,9 +1,10 @@
 import { AppButton } from '~/core/components/button';
 import { AppStackColumn, AppStackRow } from '~/core/components/stacks';
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import { PokemonHomePaginatedList } from '../components/home/paginated-list';
 import { PokemonInfiniteList } from '../components/home/infinite-list';
 import { PokemonPaginationTypeEnum } from '../types/pokemon.types';
+import { PokemonHomeList } from '../components/home/list';
 import { cn } from '~/core/helpers/cn';
 
 //
@@ -14,9 +15,15 @@ export function meta() {
 }
 
 export default function PokemonHomePage() {
+  const [offset, setOffset] = useState(0);
+
   const [paginationType, setPaginationType] = useState<PokemonPaginationTypeEnum>(
     PokemonPaginationTypeEnum.normal,
   );
+
+  const handleOnPageChange = (offset: number) => {
+    setOffset(offset);
+  };
 
   const handleUpdatePaginationType = (type: PokemonPaginationTypeEnum) => {
     setPaginationType(type);
@@ -59,7 +66,9 @@ export default function PokemonHomePage() {
           </AppStackRow>
 
           {paginationType === PokemonPaginationTypeEnum.normal ? (
-            <PokemonHomePaginatedList />
+            <Suspense fallback={<PokemonHomeList loading />}>
+              <PokemonHomePaginatedList offset={offset} onPageChange={handleOnPageChange} />
+            </Suspense>
           ) : (
             <PokemonInfiniteList />
           )}

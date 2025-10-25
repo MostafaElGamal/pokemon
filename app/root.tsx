@@ -9,7 +9,11 @@ import {
 
 import type { Route } from './+types/root';
 import './assets/app.css';
+import 'react-lazy-load-image-component/src/effects/opacity.css';
+import { HydrationBoundary, QueryClientProvider } from '@tanstack/react-query';
+import { dehydratedState, queryClient } from './services/query-client';
 import { Toaster } from 'react-hot-toast';
+import { AppLoadingScreen } from './core/components/loading-screen';
 
 //
 //
@@ -26,6 +30,10 @@ export const links: Route.LinksFunction = () => [
     href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap',
   },
 ];
+
+export function HydrateFallback() {
+  return <AppLoadingScreen />;
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -44,13 +52,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
     </html>
   );
 }
-
 export default function App() {
   return (
-    <div>
-      <Toaster />
-      <Outlet />;
-    </div>
+    <QueryClientProvider client={queryClient}>
+      <HydrationBoundary state={dehydratedState}>
+        <Toaster />
+        <Outlet />
+      </HydrationBoundary>
+    </QueryClientProvider>
   );
 }
 
