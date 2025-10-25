@@ -5,6 +5,7 @@ import { useInfiniteQueryPokemonList } from '~/services/pokemon';
 import { AppInfiniteScroll } from '~/core/components/infinite-scroll';
 import { AppButton } from '~/core/components/button';
 import { useState, useEffect } from 'react';
+import { PokemonHomeRetry } from './retry';
 
 //
 //
@@ -12,10 +13,14 @@ import { useState, useEffect } from 'react';
 const WINDOW_SCROLL_HIGHT = 300;
 
 export const PokemonInfiniteList = () => {
-  const { data, fetchNextPage, isFetchingNextPage } = useInfiniteQueryPokemonList();
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const pokemonListInfiniteQuery = useInfiniteQueryPokemonList();
 
-  const allPokemon = data?.pages.flatMap(page => page.results) ?? [];
+  const allPokemon = pokemonListInfiniteQuery.data?.pages.flatMap(page => page.results) ?? [];
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   useEffect(() => {
     const handleScroll = () => setShowBackToTop(window.scrollY > WINDOW_SCROLL_HIGHT);
@@ -24,15 +29,11 @@ export const PokemonInfiniteList = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
   return (
     <>
       <AppInfiniteScroll
-        loading={isFetchingNextPage}
-        fetchNextPage={fetchNextPage}
+        loading={pokemonListInfiniteQuery.isFetchingNextPage}
+        fetchNextPage={pokemonListInfiniteQuery.fetchNextPage}
         skeleton={
           <AppStackRow className="justify-center items-center gap-3 py-8">
             <AppSpinner />
@@ -46,6 +47,10 @@ export const PokemonInfiniteList = () => {
           ))}
         </div>
       </AppInfiniteScroll>
+
+      {pokemonListInfiniteQuery.isError && (
+        <PokemonHomeRetry onClick={() => pokemonListInfiniteQuery.refetch()} />
+      )}
 
       {showBackToTop && (
         <AppButton

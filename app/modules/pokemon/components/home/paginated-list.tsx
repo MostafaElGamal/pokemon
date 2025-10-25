@@ -3,6 +3,7 @@ import { useQuerySuspensePokemonList } from '~/services/pokemon';
 import { usePagination } from '~/core/hooks/use-pagination';
 import { DEFAULT_POKEMON_LIMIT } from '../../types/pokemon.types';
 import { PokemonHomeList } from './list';
+import { PokemonHomeRetry } from './retry';
 
 //
 //
@@ -17,6 +18,7 @@ export const PokemonHomePaginatedList = ({
   onPageChange,
 }: PokemonHomePaginatedListProps) => {
   const { getCurrentPage, getNextPage } = usePagination(DEFAULT_POKEMON_LIMIT);
+
   const pokemonListQuery = useQuerySuspensePokemonList({
     variables: { offset, limit: DEFAULT_POKEMON_LIMIT },
   });
@@ -31,6 +33,9 @@ export const PokemonHomePaginatedList = ({
   };
 
   const currentPage = getCurrentPage(offset);
+
+  if (pokemonListQuery.isError)
+    return <PokemonHomeRetry onClick={() => pokemonListQuery.refetch()} />;
 
   return (
     <>
