@@ -17,6 +17,7 @@ tasks:
     desc: Build project
     cmds:
       - pnpm run build
+      - pnpm run start
 
   lint:
     desc: Lint code & format it and type check typescript

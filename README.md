@@ -1,27 +1,37 @@
-# Welcome to React Router!
+# Pokemon Task
 
-A modern, production-ready template for building full-stack React applications using React Router.
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/remix-run/react-router-templates/tree/main/default)
+A modern Pokemon application built with React Router, TypeScript, and TailwindCSS.
 
 ## Features
 
-- 🚀 Server-side rendering
 - ⚡️ Hot Module Replacement (HMR)
 - 📦 Asset bundling and optimization
 - 🔄 Data loading and mutations
 - 🔒 TypeScript by default
 - 🎉 TailwindCSS for styling
 - 📖 [React Router docs](https://reactrouter.com/)
+- 📱 Responsive design
+- 🚀 Infinite scroll and pagination
 
 ## Getting Started
+
+### Prerequisites
+
+- Node.js
+- pnpm (recommended package manager)
 
 ### Installation
 
 Install the dependencies:
 
 ```bash
-npm install
+pnpm install
+```
+
+Or use the task runner:
+
+```bash
+task install
 ```
 
 ### Development
@@ -29,17 +39,47 @@ npm install
 Start the development server with HMR:
 
 ```bash
-npm run dev
+pnpm run dev
+```
+
+Or use the task runner:
+
+```bash
+task start
 ```
 
 Your application will be available at `http://localhost:5173`.
+
+## Available Scripts
+
+### Package.json Scripts
+
+- `pnpm run dev` - Start development server
+- `pnpm run build` - Build for production
+- `pnpm run start` - Start production server
+- `pnpm run typecheck` - Run TypeScript type checking
+- `pnpm run lint` - Run linting with oxlint
+- `pnpm run lint:fix` - Run linting with auto-fix
+
+### Task Runner Commands
+
+- `task start` - Start app in dev mode
+- `task install` - Install all dependencies
+- `task build` - Build project and start production server
+- `task lint` - Lint code, format, and type check TypeScript
 
 ## Building for Production
 
 Create a production build:
 
 ```bash
-npm run build
+pnpm run build
+```
+
+Or use the task runner:
+
+```bash
+task build
 ```
 
 ## Deployment
