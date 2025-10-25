@@ -1,0 +1,25 @@
+version: '3'
+
+#
+# Tasks
+tasks:
+  start:
+    desc: Start app in dev mode
+    cmds:
+      - pnpm run dev
+
+  install:
+    desc: Install all the dependencies
+    cmds:
+      - pnpm install
+
+  build:
+    desc: Build project
+    cmds:
+      - pnpm run build
+
+  lint:
+    desc: Lint code & format it and type check typescript
+    cmds:
+      - pnpm lint
+      - pnpm tsc

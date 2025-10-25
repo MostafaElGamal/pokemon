@@ -1,0 +1,15 @@
+{
+  "cSpell.words": ["oxlint", "pokédex"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.oxc": "explicit"
+  },
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "oxc.enable": true,
+  "prettier.jsxSingleQuote": false,
+  "prettier.singleQuote": true,
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  "typescript.tsdk": "node_modules/typescript/lib"
+}
